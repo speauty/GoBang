@@ -1,0 +1,9 @@
+.vs
+x64
+release
+Debug
+*.sln
+*.vcxproj
+*.filters
+*.user
+*.aps
