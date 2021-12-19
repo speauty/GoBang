@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <cmath>
 #include <array>
-#include <time.h>
+#include <ctime>
 #include <graphics.h>
 #include "GoBang.h"
 
@@ -150,18 +150,9 @@ void GoBang::WinnerChecker()
 				return;
 			}
 
-			for (unsigned char i = 0; i < this->LineCount; i++)
-			{
-				if (
-					(currentForwardObliqueFreq[i] == 5 && currentForwardObliqueFlag[i] != PieceEmpty) ||
-					(currentReverseObliqueFreq[i] == 5 && currentReverseObliqueFlag[i] != PieceEmpty)
-					) {
-					this->State.Winner = this->State.IterationFlag == PieceBlack ? PieceWhite : PieceBlack;
-					return;
-				}
-			}
+		
 
-			for (unsigned char i = this->LineCount; i < this->LineCount*2; i++)
+			for (unsigned char i = 0; i < this->LineCount*2; i++)
 			{
 				if (
 					(currentForwardObliqueFreq[i] == 5 && currentForwardObliqueFlag[i] != PieceEmpty) ||
@@ -183,7 +174,9 @@ void GoBang::GameInit()
 	this->InitPieces(); // 初始化棋子
 
 	/* 初始化窗口(强行补充右边面板宽度) */
-	initgraph(this->WinSize + this->RightBoardWidth, this->WinSize);
+	HWND hWnd = initgraph(this->WinSize + this->RightBoardWidth, this->WinSize);
+	SetWindowText(hWnd, T_TEXT_TITLE);
+
 	// 设置背景色为蓝色 & 背景色清空屏幕
 	setbkcolor(COLOR_BG);
 	cleardevice();
@@ -265,7 +258,7 @@ void GoBang::GameRender()
 		if (this->State.Winner != PieceEmpty) {
 			swprintf_s(tmpText, _T("恭喜%s获得胜利"), this->State.Winner == PieceWhite?_T("白方") : _T("黑方"));
 		} else {
-			swprintf_s(tmpText, _T("等待%s落子%3ds"), this->State.IterationFlag == PieceWhite ? _T("白方") : _T("黑方"), TIME_DIFF_PIECE_WAIT - (GetTickCount() - this->State.TimePieceWait)/1000);
+			swprintf_s(tmpText, _T("等待%s落子%3ds"), this->State.IterationFlag == PieceWhite ? _T("白方") : _T("黑方"), (int)(TIME_DIFF_PIECE_WAIT - (GetTickCount() - this->State.TimePieceWait) / 1000));
 		}
 	}
 	

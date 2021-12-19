@@ -9,4 +9,5 @@ int main()
 		gb->GameUpdate();
 		gb->GameRender();
 	}
+	delete gb;
 }

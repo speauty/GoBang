@@ -28,9 +28,9 @@ struct Axis {
 
 struct Piece 
 {
-	Axis Position;
-	PieceFlag CurrentFlag;
-	unsigned char IdxShowed;
+	Axis Position; // 坐标
+	PieceFlag CurrentFlag; // 当前标识
+	unsigned char IdxShowed; // 出现序列号
 };
 
 struct State
@@ -52,11 +52,11 @@ class GoBang{
 private:
 	const int WinSize; // 窗口大小
 	const int LineCount; // 网格线数量(单向)
-	const int RightBoardWidth;
-	const int GridSize;
-	const int PieceRadius;
-	State State = {};
-	std::array<Piece, NUM_PIECE> Pieces = {0};
+	const int RightBoardWidth; // 右边面板宽度指定
+	const int GridSize; // 格子尺寸
+	const int PieceRadius; // 棋子半径
+	State State = {}; // 状态集
+	std::array<Piece, NUM_PIECE> Pieces = {0}; // 棋子集
 private:
 	void InitState();
 	void InitPieces();
